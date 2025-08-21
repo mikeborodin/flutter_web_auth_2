@@ -129,6 +129,16 @@ public class FlutterWebAuth2Plugin: NSObject, FlutterPlugin {
             } else {
                 result(FlutterError(code: "FAILED", message: "This plugin does currently not support iOS lower than iOS 11", details: nil))
             }
+        } else if call.method == "continueAuthentication",
+                  let arguments = call.arguments as? [String: AnyObject],
+                  let uriString = arguments["uri"] as? String,
+                  let uri = URL(string: uriString) {
+            if let completionHandler = completionHandler {
+                completionHandler(uri, nil)
+                result(nil)
+            } else {
+                result(FlutterError(code: "UNSUPPORTED", message: "Please call authenticate first", details: nil))
+            }
         } else if call.method == "cleanUpDanglingCalls" {
             // we do not keep track of old callbacks on iOS, so nothing to do here
             result(nil)

@@ -50,6 +50,12 @@ abstract class FlutterWebAuth2Platform extends PlatformInterface {
         options: options,
       );
 
+  /// Continue the authentication process with the given [uri].
+  ///
+  /// If authentication was started using the `authenticate` method, this will
+  /// complete the authentication successfully. Otherwise, it throws an error.
+  Future<void> continueAuthentication(Uri uri) => _instance.continueAuthentication(uri);
+
   /// The plugin may need to store the resulting callbacks in order to pass
   /// the result back to the caller of `authenticate`. But if that result never
   /// comes the callback will dangle around forever. This can be called to

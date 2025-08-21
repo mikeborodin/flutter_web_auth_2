@@ -28,8 +28,7 @@ class _OnAppLifecycleResumeObserver extends WidgetsBindingObserver {
 class FlutterWebAuth2 {
   static final RegExp _schemeRegExp = RegExp(r'^[a-z][a-z\d+.-]*$');
 
-  static FlutterWebAuth2Platform get _platform =>
-      FlutterWebAuth2Platform.instance;
+  static FlutterWebAuth2Platform get _platform => FlutterWebAuth2Platform.instance;
 
   static final _OnAppLifecycleResumeObserver _resumedObserver =
       _OnAppLifecycleResumeObserver(_cleanUpDanglingCalls);
@@ -83,6 +82,14 @@ class FlutterWebAuth2 {
       callbackUrlScheme: callbackUrlScheme,
       options: options.toJson(),
     );
+  }
+
+  /// Continue the authentication process with the given [uri].
+  ///
+  /// If authentication was started using the `authenticate` method, this will
+  /// complete the authentication successfully. Otherwise, it throws an error.
+  static Future<void> continueAuthentication(Uri uri) async {
+    await _platform.continueAuthentication(uri);
   }
 
   /// The plugin may need to store the resulting callbacks in order to pass
